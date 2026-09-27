@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="96" height="96" fill="none">
-  <!-- Selection marquee pick box -->
-  <rect x="22" y="10" width="16" height="15" rx="2" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="3 2" fill="none" />
-  <!-- CAD Arrow Cursor with Stem -->
-  <path d="M10 8 L10 33 L17 26 L23 37 L27 35 L21 24 L30 24 Z" fill="#38bdf8" fill-opacity="0.3" stroke="#38bdf8" stroke-width="2.6" stroke-linejoin="round" />
-  <!-- Cursor pick hotspot dot -->
-  <circle cx="10" cy="8" r="2.5" fill="#f8fafc" />
-</svg>
