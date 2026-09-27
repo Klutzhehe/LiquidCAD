@@ -8,6 +8,11 @@ export default defineConfig({
   server: {
     port: 3200
   },
+  css: {
+    postcss: {
+      plugins: []
+    }
+  },
   build: {
     outDir: 'dist'
   }

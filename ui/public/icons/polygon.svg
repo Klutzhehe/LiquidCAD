@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="96" height="96" fill="none">
+  <!-- Inscribed construction circle -->
+  <circle cx="24" cy="24" r="14.7" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="2.5 2" fill="none" />
+  <!-- Regular Hexagon body -->
+  <polygon points="24,7 39,15.5 39,32.5 24,41 9,32.5 9,15.5" fill="#38bdf8" fill-opacity="0.16" stroke="#38bdf8" stroke-width="3" stroke-linejoin="round" />
+  <!-- Center anchor dot -->
+  <circle cx="24" cy="24" r="2.5" fill="#f8fafc" />
+  <!-- Vertex anchor dots -->
+  <circle cx="24" cy="7" r="3" fill="#f8fafc" />
+  <circle cx="39" cy="15.5" r="3" fill="#f8fafc" />
+  <circle cx="39" cy="32.5" r="3" fill="#f8fafc" />
+  <circle cx="24" cy="41" r="3" fill="#f8fafc" />
+  <circle cx="9" cy="32.5" r="3" fill="#f8fafc" />
+  <circle cx="9" cy="15.5" r="3" fill="#f8fafc" />
+</svg>

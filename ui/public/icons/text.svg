@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="96" height="96" fill="none">
+  <!-- Drafting baseline -->
+  <line x1="8" y1="40" x2="40" y2="40" stroke="#94a3b8" stroke-width="2.4" stroke-linecap="round" />
+  <!-- Insertion anchor dot -->
+  <circle cx="10" cy="40" r="3.2" fill="#f8fafc" />
+  <!-- Baseline end tick -->
+  <line x1="38" y1="37" x2="38" y2="43" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" />
+  <!-- Vector Letter 'A' -->
+  <path d="M14 36 L24 10 L34 36 M18 27 h12" stroke="#38bdf8" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+</svg>

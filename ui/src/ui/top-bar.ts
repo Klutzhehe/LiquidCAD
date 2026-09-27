@@ -27,6 +27,7 @@ export class TopBar {
 
   constructor(container: HTMLElement, handlers: TopBarHandlers) {
     this.el = document.createElement('div');
+    this.el.id = 'fluidcad-topbar';
     this.el.className =
       // z sits one above the navbar's z-[120] — both are stacking contexts and
       // the navbar is later in the DOM, so the Export dropdown, which hangs

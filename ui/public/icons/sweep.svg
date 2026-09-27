@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="96" height="96" fill="none">
+  <!-- Swept Body Volume Fill -->
+  <path d="M 6.5 34 C 7.5 21 17 17 27 17 C 33 17 37 13 39 8.5 L 44.5 14 C 42.5 18.5 38.5 22.5 32.5 22.5 C 22.5 22.5 14.5 26.5 12.5 39.5 Z" fill="#f8fafc" fill-opacity="0.08" />
+
+  <!-- Trajectory Guide Spline (Centerline) -->
+  <path d="M 9.5 37 C 11 23.5 20 19.5 30 19.5 C 36 19.5 40 15.5 42 11" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="3 2" fill="none" />
+
+  <!-- Swept Body Rails -->
+  <path d="M 6.5 34 C 7.5 21 17 17 27 17 C 33 17 37 13 39 8.5" stroke="#f8fafc" stroke-width="2.6" stroke-linecap="round" fill="none" />
+  <path d="M 12.5 39.5 C 14.5 26.5 22.5 22.5 32.5 22.5 C 38.5 22.5 42.5 18.5 44.5 14" stroke="#f8fafc" stroke-width="2.6" stroke-linecap="round" fill="none" />
+
+  <!-- End Face -->
+  <ellipse cx="41.8" cy="11.2" rx="3.8" ry="3.8" transform="rotate(-40 41.8 11.2)" stroke="#f8fafc" stroke-width="2.4" fill="#f8fafc" fill-opacity="0.16" />
+
+  <!-- Active Start Profile Face (Sketch Profile Being Swept) -->
+  <ellipse cx="9.5" cy="37" rx="5" ry="3.2" transform="rotate(-30 9.5 37)" fill="#38bdf8" fill-opacity="0.22" stroke="#38bdf8" stroke-width="2.6" />
+
+  <!-- Active Trajectory Sweep Direction Vector -->
+  <polyline points="38,5 44,7 44.5,13" stroke="#38bdf8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

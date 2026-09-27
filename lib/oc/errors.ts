@@ -10,7 +10,7 @@ import { getOC } from "./init.js";
 export function describeOcException(e: unknown): string {
   if (isWasmException(e)) {
     try {
-      const [type, message] = getOC().getExceptionMessage(e);
+      const [type, message] = getOC().getExceptionMessage(e as any);
       return `${type}: ${message}`;
     } catch {
       return "WebAssembly.Exception (failed to decode OCCT message)";

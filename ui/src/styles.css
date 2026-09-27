@@ -1,36 +1,42 @@
 @import "tailwindcss";
 
 @plugin "daisyui" {
-  themes: fluidcad-dark --default --prefersdark, fluidcad-light;
+  themes: flow-dark --default --prefersdark, flow-light;
 }
 
+/* EspFlow7 design tokens, ported from EspFlow7/src/index.css so the CAD
+   editor reads as the same app rather than an embedded third-party tool.
+   Values are the hex equivalents of EspFlow7's `hsl(var(--*))` tokens —
+   daisyUI themes don't resolve CSS custom properties from a host app, so
+   the conversion is baked in here instead of referenced live. Keep the two
+   in sync by hand if EspFlow7's palette changes. */
 @plugin "daisyui/theme" {
-  name: "fluidcad-dark";
+  name: "flow-dark";
   default: true;
   prefersdark: true;
   color-scheme: dark;
-  --color-primary: #4a9eff;
-  --color-primary-content: #ffffff;
-  --color-secondary: #7b92b2;
-  --color-secondary-content: #ffffff;
-  --color-accent: #67cba0;
-  --color-accent-content: #ffffff;
-  --color-neutral: #23282e;
-  --color-neutral-content: #e0e0e0;
-  --color-base-100: #1e1e1e;
-  --color-base-200: #252525;
-  --color-base-300: #2d2d2d;
-  --color-base-content: #d4d4d4;
-  --color-info: #3abff8;
-  --color-info-content: #002b3d;
-  --color-success: #36d399;
-  --color-success-content: #003320;
-  --color-warning: #fbbd23;
-  --color-warning-content: #382800;
-  --color-error: #f87272;
-  --color-error-content: #470000;
+  --color-primary: #3b82f6;
+  --color-primary-content: #0f172a;
+  --color-secondary: #1e293b;
+  --color-secondary-content: #f8fafc;
+  --color-accent: #1e293b;
+  --color-accent-content: #f8fafc;
+  --color-neutral: #1e293b;
+  --color-neutral-content: #94a3b8;
+  --color-base-100: #020817;
+  --color-base-200: #0e1525;
+  --color-base-300: #1e293b;
+  --color-base-content: #f8fafc;
+  --color-info: #3b82f6;
+  --color-info-content: #0f172a;
+  --color-success: #10b981;
+  --color-success-content: #022c1e;
+  --color-warning: #f59e0b;
+  --color-warning-content: #2a1a02;
+  --color-error: #ef4444;
+  --color-error-content: #2a0a0a;
   --radius-selector: 0.5rem;
-  --radius-field: 0.25rem;
+  --radius-field: 0.375rem;
   --radius-box: 0.5rem;
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
@@ -42,7 +48,7 @@
   --scene-grid-color: #6f6f6f;
   --scene-meta-edge-color: #b0b0b0;
   --scene-highlight-color: #ffb433;
-  --scene-select-edge-color: #11a4ed;
+  --scene-select-edge-color: #3b82f6;
   --scene-select-face-color: #5c9fcc;
   --scene-constraint-color: #cccccc;
   --scene-ghost-add-face: #3fb950;
@@ -59,7 +65,7 @@
 }
 
 @plugin "daisyui/theme" {
-  name: "fluidcad-light";
+  name: "flow-light";
   color-scheme: light;
   --color-primary: #2563eb;
   --color-primary-content: #ffffff;
@@ -276,4 +282,150 @@ html.fluidcad-editor-animating {
 [data-param-part] option {
   background-color: var(--color-base-100);
   color: var(--color-base-content);
+}
+
+/* ==========================================================================
+   Node Editor Floating Utility Bar Mode
+   Activated when data-toolbar="node-editor" on html
+   ========================================================================== */
+
+html[data-toolbar="node-editor"] {
+  --fluidcad-chrome-top: 0px;
+}
+
+html[data-toolbar="node-editor"] #fluidcad-topbar {
+  display: none !important;
+}
+
+html[data-toolbar="node-editor"] #fluidcad-navbar {
+  position: absolute !important;
+  top: 0.875rem !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: auto !important;
+  max-width: calc(100vw - 3rem) !important;
+  height: 2.75rem !important;
+  padding: 0.25rem 0.5rem !important;
+  border-radius: 9999px !important;
+  background-color: rgba(24, 28, 37, 0.94) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.5) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.25rem !important;
+  z-index: 120 !important;
+}
+
+html[data-toolbar="node-editor"] #fluidcad-navbar .overflow-x-clip {
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+html[data-toolbar="node-editor"] #fluidcad-navbar .overflow-x-clip::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Individual toolbar buttons - styled like FloatingUtilityButton */
+html[data-toolbar="node-editor"] #fluidcad-navbar button:not([aria-label="Finish sketch"]):not([aria-label*="Scroll"]) {
+  width: 2rem !important;
+  height: 2rem !important;
+  min-height: 2rem !important;
+  border-radius: 9999px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: transparent !important;
+  border: none !important;
+  color: rgba(248, 250, 252, 0.7) !important;
+  transition: all 0.15s ease-in-out !important;
+  flex-direction: row !important;
+  cursor: pointer !important;
+}
+
+html[data-toolbar="node-editor"] #fluidcad-navbar button:not([aria-label="Finish sketch"]):not([aria-label*="Scroll"]):hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+html[data-toolbar="node-editor"] #fluidcad-navbar button.btn-primary,
+html[data-toolbar="node-editor"] #fluidcad-navbar button.btn-soft {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+html[data-toolbar="node-editor"] #fluidcad-navbar button:not([aria-label="Finish sketch"]):not([aria-label*="Scroll"]) img {
+  width: 1.15rem !important;
+  height: 1.15rem !important;
+  object-fit: contain !important;
+  pointer-events: none !important;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.3));
+}
+
+html[data-toolbar="node-editor"] #fluidcad-navbar button:not([aria-label="Finish sketch"]):not([aria-label*="Scroll"]) svg {
+  width: 1.15rem !important;
+  height: 1.15rem !important;
+  pointer-events: none !important;
+}
+
+/* Hide text label beneath icon in node-editor compact mode */
+html[data-toolbar="node-editor"] #fluidcad-navbar button:not([aria-label="Finish sketch"]):not([aria-label*="Scroll"]) span {
+  display: none !important;
+}
+
+/* Finish Sketch green pill button */
+html[data-toolbar="node-editor"] #fluidcad-navbar button[aria-label="Finish sketch"] {
+  height: 2rem !important;
+  min-height: 2rem !important;
+  border-radius: 9999px !important;
+  padding: 0 0.75rem !important;
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 0.375rem !important;
+  background-color: rgba(16, 185, 129, 0.2) !important;
+  border: 1px solid rgba(16, 185, 129, 0.6) !important;
+  color: #34d399 !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  margin-right: 0.25rem !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease-in-out !important;
+}
+
+html[data-toolbar="node-editor"] #fluidcad-navbar button[aria-label="Finish sketch"]:hover {
+  background-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+html[data-toolbar="node-editor"] #fluidcad-navbar button[aria-label="Finish sketch"] svg {
+  width: 1rem !important;
+  height: 1rem !important;
+  color: #34d399 !important;
+}
+
+html[data-toolbar="node-editor"] #fluidcad-navbar button[aria-label="Finish sketch"] span {
+  display: inline !important;
+  color: #34d399 !important;
+  font-size: 0.75rem !important;
+}
+
+/* Dividers in floating bar */
+html[data-toolbar="node-editor"] #fluidcad-navbar div.w-px,
+html[data-toolbar="node-editor"] #fluidcad-navbar div.h-8 {
+  height: 1.25rem !important;
+  width: 1px !important;
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  margin: 0 0.25rem !important;
+  display: block !important;
+}
+
+html[data-toolbar="node-editor"] #fluidcad-navbar div.hidden {
+  display: none !important;
+}
+
+/* Docked panels and dialogs adjustment */
+html[data-toolbar="node-editor"] .fluidcad-timeline-panel {
+  top: 1rem !important;
 }

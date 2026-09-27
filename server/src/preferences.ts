@@ -36,7 +36,7 @@ export interface Preferences {
 }
 
 const DEFAULTS: Preferences = {
-  theme: 'fluidcad-dark',
+  theme: 'flow-dark',
   showGrid: true,
   showConnectors: true,
   cameraMode: 'orthographic',

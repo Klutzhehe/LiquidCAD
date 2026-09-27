@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="96" height="96" fill="none">
+  <!-- Datum Plane Surface in Perspective -->
+  <polygon points="24,18 43,28 24,38 5,28" fill="#38bdf8" fill-opacity="0.22" stroke="#38bdf8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <!-- Reference Coordinate Axes on Plane (U & V) -->
+  <line x1="14.5" y1="23" x2="33.5" y2="33" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="3 2" />
+  <line x1="33.5" y1="23" x2="14.5" y2="33" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="3 2" />
+  
+  <!-- Plane Center Origin -->
+  <circle cx="24" cy="28" r="2.2" fill="#f8fafc" />
+
+  <!-- Normal Direction Vector (+Z Normal Axis) -->
+  <line x1="24" y1="28" x2="24" y2="6.5" stroke="#38bdf8" stroke-width="2.8" stroke-linecap="round" />
+  <polyline points="19,12 24,6 29,12" stroke="#38bdf8" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

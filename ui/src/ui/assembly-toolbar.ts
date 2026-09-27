@@ -12,6 +12,10 @@ export type AssemblyToolbarHandlers = {
   onReplicate?: () => void;
   /** A mate button — opens the mate dialog with that type preselected. */
   onMate?: (type: AssemblyMateType) => void;
+  /** Opens the Robotics Configuration & Kinematics dialog */
+  onRobotConfig?: () => void;
+  /** One-click sync of robot definition with ESP Flow */
+  onRobotSync?: () => void;
 };
 
 /**
@@ -57,7 +61,6 @@ export class AssemblyToolbar {
         this.addPlaceholder(mateGroup, opts);
       }
     }
-    // this.addPlaceholder(mateGroup, { icon: 'joint-spherical', label: 'Spherical', tip: 'Spherical mate' });
 
     // Last group, the occasional tools after the daily mates: Replicate
     // (copies of a mated seed onto new targets) then Connector.
@@ -73,6 +76,15 @@ export class AssemblyToolbar {
       this.addButton(connectorGroup, connectorOpts, handlers.onConnector);
     } else {
       this.addPlaceholder(connectorGroup, connectorOpts);
+    }
+
+    // Robotics group: Configure Robot (frames, servos, sensors) + Sync with Flow
+    const roboticsGroup = navbar.addGroup('assembly-robotics', { mode: 'assembly' });
+    if (handlers.onRobotConfig) {
+      this.addButton(roboticsGroup, { icon: 'robot', label: 'Robot', tip: 'Configure Robot Kinematics & Servos' }, handlers.onRobotConfig);
+    }
+    if (handlers.onRobotSync) {
+      this.addButton(roboticsGroup, { icon: 'assembly', label: 'Sync Flow', tip: 'Sync Robot Definition to ESP Flow' }, handlers.onRobotSync);
     }
   }
 

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="96" height="96" fill="none">
+  <!-- Central Axis -->
+  <line x1="24" y1="5" x2="24" y2="43" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="3 2" stroke-linecap="round" />
+
+  <!-- Cylindrical Body Fill -->
+  <path d="M 10 12 L 10 36 C 10 41.5 38 41.5 38 36 L 38 12 Z" fill="#f8fafc" fill-opacity="0.08" />
+
+  <!-- Bottom Rim (Back hidden edge) -->
+  <path d="M 10 36 C 10 30.5 38 30.5 38 36" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="3 2" fill="none" />
+  <!-- Bottom Rim (Front visible edge) -->
+  <path d="M 10 36 C 10 41.5 38 41.5 38 36" stroke="#f8fafc" stroke-width="2.6" stroke-linecap="round" fill="none" />
+
+  <!-- Cylinder Side Silhouettes -->
+  <line x1="10" y1="12" x2="10" y2="36" stroke="#f8fafc" stroke-width="2.6" stroke-linecap="round" />
+  <line x1="38" y1="12" x2="38" y2="36" stroke="#f8fafc" stroke-width="2.6" stroke-linecap="round" />
+
+  <!-- Active Top Face (Circular Planar Face in Perspective) -->
+  <ellipse cx="24" cy="12" rx="14" ry="5.5" fill="#38bdf8" fill-opacity="0.22" stroke="#38bdf8" stroke-width="2.6" />
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="96" height="96" fill="none">
+  <!-- Base reference plane surface -->
+  <polygon points="24,18 42,27 24,36 6,27" fill="#f8fafc" fill-opacity="0.08" stroke="#f8fafc" stroke-width="2.6" stroke-linejoin="round" />
+  <!-- Plane edge depth -->
+  <polyline points="6,27 6,31 24,40 42,31 42,27" stroke="#f8fafc" stroke-width="2.2" stroke-linejoin="round" fill="none" />
+
+  <!-- Planar contact puck sliding on surface (3 DOFs) -->
+  <polygon points="24,11 33,16 24,21 15,16" fill="#38bdf8" fill-opacity="0.25" stroke="#38bdf8" stroke-width="2.6" stroke-linejoin="round" />
+  <polygon points="15,16 24,21 24,25 15,20" fill="#38bdf8" fill-opacity="0.35" stroke="#38bdf8" stroke-width="2.4" stroke-linejoin="round" />
+  <polygon points="24,21 33,16 33,20 24,25" fill="#38bdf8" fill-opacity="0.15" stroke="#38bdf8" stroke-width="2.4" stroke-linejoin="round" />
+
+  <!-- Planar sliding arrows on plane surface -->
+  <line x1="28" y1="29" x2="36" y2="25" stroke="#38bdf8" stroke-width="2.4" stroke-linecap="round" />
+  <polyline points="32,25 36,25 35,28" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+  <line x1="20" y1="29" x2="12" y2="33" stroke="#38bdf8" stroke-width="2.4" stroke-linecap="round" />
+  <polyline points="16,33 12,33 13,30" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

@@ -11,6 +11,7 @@ import { AnimateBar } from './ui/animate-bar';
 import { ParamsPanel } from './ui/params-panel';
 import { ParamEditorDialog } from './ui/param-editor-dialog';
 import { ExportDialog, exportBaseName } from './ui/export-dialog';
+import { RobotConfigDialog } from './ui/robotics/robot-config-dialog';
 import { BreakpointIndicator } from './ui/breakpoint-indicator';
 import { ErrorBanner } from './ui/error-banner';
 import { LoadingOverlay } from './ui/loading-overlay';
@@ -183,6 +184,12 @@ function toggleEditorPane(): void {
   editorPaneOpenOnArrival = true;
 }
 let editorPaneOpenOnArrival = false;
+const urlParams = new URLSearchParams(window.location.search);
+const isFlowMode = urlParams.get('flow') === '1' || urlParams.get('toolbar') === 'node-editor' || window.self !== window.top;
+if (isFlowMode) {
+  document.documentElement.setAttribute('data-toolbar', 'node-editor');
+  container.style.setProperty('--fluidcad-chrome-top', '0px');
+}
 let pendingShowBuildTimings = false;
 
 const loadingOverlay = new LoadingOverlay(container);
@@ -279,6 +286,7 @@ const exportDialog = new ExportDialog(container, engineClient, viewer.sceneConte
 const paramEditorDialog = new ParamEditorDialog(container);
 const paramsPanel = new ParamsPanel(null, engineClient, paramEditorDialog);
 
+const robotConfigDialog = new RobotConfigDialog(container, viewer);
 // ---------------------------------------------------------------------------
 // Left-rail abstraction. The same DOM container hosts either the part-design
 // rail (TimelinePanel, History + Shapes + Parameters) or the assembly rail
@@ -875,6 +883,17 @@ new AssemblyToolbar(navbar, {
     assemblyReplicateService.begin(owner
       ? { kind: 'occurrence', id: owner.split('/')[0] }
       : { kind: 'instance', id: inst.instanceId });
+  },
+  onRobotConfig: () => {
+    if (lastAssemblyPayload) {
+      robotConfigDialog.show(lastAssemblyPayload, currentSceneAbsPath ?? '');
+    }
+  },
+  onRobotSync: () => {
+    if (lastAssemblyPayload) {
+      robotConfigDialog.show(lastAssemblyPayload, currentSceneAbsPath ?? '');
+    }
+  }
   },
 });
 
@@ -3007,9 +3026,11 @@ function connectWebSocket() {
         } else {
           loadingOverlay.hide();
         }
+        }
         break;
       case 'processing-file':
         loadingOverlay.show('Loading model...');
+        setTimeout(() => loadingOverlay.hide(), 6000);
         break;
       case 'scene-rendered': {
         loadingOverlay.hide();
@@ -3019,6 +3040,7 @@ function connectWebSocket() {
           // Acknowledged even when applying threw: this page will not get any
           // further with that scene, and a screenshot must not wait on it.
           acknowledgeSceneApplied(ws, msg.sceneVersion);
+        }
         }
         break;
       }

@@ -91,49 +91,89 @@ export class FontRegistry {
   private static allFiles: string[] = [];
   private static fontCache = new Map<string, Font | null>();
 
+  private static initPromise: Promise<void> | null = null;
+
   static async init(): Promise<void> {
-    if (this.index) {
-      return;
+    if (this.initPromise) {
+      return this.initPromise;
     }
-    const index = new Map<string, FontVariant[]>();
-    let files: string[] = [];
-    try {
-      files = await listSystemFonts();
-    } catch (e) {
-      console.warn("FontRegistry: failed to list system fonts:", (e as Error).message);
+    if (!this.index) {
+      this.index = new Map<string, FontVariant[]>();
     }
-    this.allFiles = files;
 
-    for (const file of files) {
+    this.initPromise = (async () => {
+      let files: string[] = [];
       try {
-        for (const face of faces(openSync(file))) {
-          if (!face || !face.familyName) {
-            continue;
-          }
-          const key = normName(face.familyName);
-          if (!this.displayNames.has(key)) {
-            this.displayNames.set(key, face.familyName);
-          }
-          const variant: FontVariant = {
-            path: file,
-            psName: face.postscriptName,
-            weight: weightOf(face),
-            italic: isItalic(face),
-          };
-          const list = index.get(key);
-          if (list) {
-            list.push(variant);
-          } else {
-            index.set(key, [variant]);
-          }
-        }
-      } catch {
-        // Skip unreadable / unsupported font files.
+        files = await listSystemFonts();
+      } catch (e) {
+        console.warn("FontRegistry: failed to list system fonts:", (e as Error).message);
       }
-    }
+      this.allFiles = files;
 
-    this.index = index;
-    console.debug(`FontRegistry: indexed ${index.size} families from ${files.length} files`);
+      // Prioritize common system fonts for instant resolution
+      const priorityFiles: string[] = [];
+      const remainingFiles: string[] = [];
+      for (const file of files) {
+        const lower = file.toLowerCase();
+        if (
+          lower.includes('arial') ||
+          lower.includes('segoe') ||
+          lower.includes('calibri') ||
+          lower.includes('tahoma') ||
+          lower.includes('times') ||
+          lower.includes('helvetica')
+        ) {
+          priorityFiles.push(file);
+        } else {
+          remainingFiles.push(file);
+        }
+      }
+
+      const indexFile = (file: string) => {
+        try {
+          for (const face of faces(openSync(file))) {
+            if (!face || !face.familyName) {
+              continue;
+            }
+            const key = normName(face.familyName);
+            if (!this.displayNames.has(key)) {
+              this.displayNames.set(key, face.familyName);
+            }
+            const variant: FontVariant = {
+              path: file,
+              psName: face.postscriptName,
+              weight: weightOf(face),
+              italic: isItalic(face),
+            };
+            const list = this.index!.get(key);
+            if (list) {
+              list.push(variant);
+            } else {
+              this.index!.set(key, [variant]);
+            }
+          }
+        } catch {
+          // Skip unreadable font files
+        }
+      };
+
+      for (const file of priorityFiles) {
+        indexFile(file);
+      }
+
+      // Process remaining files in small async chunks without blocking main event loop
+      for (let i = 0; i < remainingFiles.length; i += 25) {
+        const chunk = remainingFiles.slice(i, i + 25);
+        for (const file of chunk) {
+          indexFile(file);
+        }
+        await new Promise((r) => setTimeout(r, 0));
+      }
+
+      console.debug(`FontRegistry: indexed ${this.index!.size} families from ${files.length} files`);
+    })();
+
+    return this.initPromise;
   }
 
   /**

@@ -4768,3 +4768,25 @@ export function savePreference<K extends keyof UserPreferences>(
 ): void {
   postFireAndForget('/api/preferences', { [key]: value });
 }
+
+// ---------------------------------------------------------------------------
+// Robotics Definition Export
+// ---------------------------------------------------------------------------
+
+export type ExportRobotResponse = {
+  success: boolean;
+  writtenFiles?: string[];
+  message?: string;
+  error?: string;
+};
+
+export async function exportRobotDefinition(payload: {
+  robotDefinition: any;
+  urdf?: string;
+  targetDir?: string;
+  activeFile?: string;
+}): Promise<ExportRobotResponse> {
+  const result = await postJson<ExportRobotResponse>('/api/robotics/export', payload);
+  return result ?? { success: false, error: 'No response from robotics export endpoint.' };
+}
+

@@ -70,6 +70,7 @@ export class Navbar {
 
   constructor(container: HTMLElement) {
     this.el = document.createElement('div');
+    this.el.id = 'fluidcad-navbar';
     this.el.className =
       'absolute top-12 left-0 right-0 h-14 z-[120] flex items-center px-2 ' +
       'panel-bg border-b border-base-content/10 select-none';

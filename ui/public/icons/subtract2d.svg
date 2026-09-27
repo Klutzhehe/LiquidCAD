@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="96" height="96" fill="none">
+  <!-- Shape A's remainder: Crescent notched shape -->
+  <path d="M24 13.61 A 12 12 0 1 0 24 34.39 A 12 12 0 0 1 24 13.61 Z" fill="#38bdf8" fill-opacity="0.22" stroke="#38bdf8" stroke-width="2.8" stroke-linejoin="round" />
+
+  <!-- Subtracted tool shape (Circle B) ghost -->
+  <circle cx="30" cy="24" r="12" stroke="#f43f5e" stroke-width="2.2" stroke-dasharray="3 2" fill="#f43f5e" fill-opacity="0.08" />
+
+  <!-- Negative subtract minus badge -->
+  <circle cx="31" cy="24" r="5" fill="#0f172a" stroke="#f43f5e" stroke-width="1.8" />
+  <line x1="28.5" y1="24" x2="33.5" y2="24" stroke="#f43f5e" stroke-width="2.2" stroke-linecap="round" />
+</svg>

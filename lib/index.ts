@@ -212,7 +212,11 @@ export interface FluidCADOptions {
 }
 
 export async function init(options?: FluidCADOptions) {
-  await Promise.all([loadOC(), FontRegistry.init()]);
+  // Start font indexing in the background so OpenCascade and scene initialization start instantly
+  void FontRegistry.init().catch((err) => {
+    console.warn("FontRegistry init error:", err);
+  });
+  await loadOC();
   const existing = getSceneManager();
   if (existing) {
     return existing;

@@ -32,6 +32,7 @@ import { createInstancePoseRouter } from './routes/instance-pose.ts';
 import { createAssemblyMateRouter } from './routes/assembly-mate.ts';
 import { createAssemblyConnectorRouter } from './routes/assembly-connector.ts';
 import { createAssemblyReplicateRouter } from './routes/assembly-replicate.ts';
+import { createRoboticsRouter } from './routes/robotics.ts';
 import { createTextRouter } from './routes/text.ts';
 import { createFeatureGhostRouter } from './routes/feature-ghost.ts';
 import { createFilesRouter } from './routes/files.ts';
@@ -196,6 +197,7 @@ app.use('/api', createInstancePoseRouter(fluidCadServer, editDispatcher));
 app.use('/api', createAssemblyMateRouter(fluidCadServer, editDispatcher));
 app.use('/api', createAssemblyReplicateRouter(fluidCadServer, editDispatcher));
 app.use('/api', createAssemblyConnectorRouter(fluidCadServer, editDispatcher));
+app.use('/api', createRoboticsRouter(WORKSPACE_PATH));
 
 // Static files — serve UI build, with SPA fallback. index.html goes through
 // sendIndexHtml so the saved theme is on <html> before the first paint — the
@@ -205,8 +207,8 @@ async function sendIndexHtml(res: express.Response): Promise<void> {
   res.setHeader('Cache-Control', 'no-cache');
   try {
     const html = await fs.promises.readFile(path.join(UI_DIST, 'index.html'), 'utf8');
-    const theme = (await loadPreferences()).theme.replace(/[^\w-]/g, '') || 'fluidcad-dark';
-    res.type('html').send(html.replace('data-theme="fluidcad-dark"', `data-theme="${theme}"`));
+    const theme = (await loadPreferences()).theme.replace(/[^\w-]/g, '') || 'flow-dark';
+    res.type('html').send(html.replace('data-theme="flow-dark"', `data-theme="${theme}"`));
   } catch {
     res.sendFile(path.join(UI_DIST, 'index.html'));
   }
@@ -686,7 +688,7 @@ httpServer.listen(PORT, HOST, () => {
   sendToExtension({ type: 'ready', port: PORT, url });
 
   // Initialize FluidCAD server in the background
-  fluidCadServer.init(WORKSPACE_PATH).then(() => {
+  fluidCadServer.init(WORKSPACE_PATH).then(async () => {
     // Starting without an engine is legal — the UI and the editor still work —
     // but it is never what someone wants silently, so it lands in the terminal
     // as well as in the page.
@@ -696,6 +698,17 @@ httpServer.listen(PORT, HOST, () => {
     }
     sendToExtension({ type: 'init-complete', success: true });
     broadcastToUI({ type: 'init-complete', success: true });
+
+    if (WORKSPACE_PATH) {
+      try {
+        const files = await fs.promises.readdir(WORKSPACE_PATH);
+        const scriptFile = files.find((f: string) => f.endsWith('.part.js') || f.endsWith('.fluid.js') || f.endsWith('.assembly.js'));
+        if (scriptFile) {
+          const fullPath = path.join(WORKSPACE_PATH, scriptFile);
+          handleExtensionMessage({ type: 'process-file', filePath: fullPath });
+        }
+      } catch {}
+    }
   }).catch((err: any) => {
     const error = err.stack || err.message || String(err);
     sendToExtension({ type: 'init-complete', success: false, error });
