@@ -893,7 +893,6 @@ new AssemblyToolbar(navbar, {
     if (lastAssemblyPayload) {
       robotConfigDialog.show(lastAssemblyPayload, currentSceneAbsPath ?? '');
     }
-  }
   },
 });
 
@@ -3026,7 +3025,6 @@ function connectWebSocket() {
         } else {
           loadingOverlay.hide();
         }
-        }
         break;
       case 'processing-file':
         loadingOverlay.show('Loading model...');
@@ -3040,7 +3038,6 @@ function connectWebSocket() {
           // Acknowledged even when applying threw: this page will not get any
           // further with that scene, and a screenshot must not wait on it.
           acknowledgeSceneApplied(ws, msg.sceneVersion);
-        }
         }
         break;
       }
